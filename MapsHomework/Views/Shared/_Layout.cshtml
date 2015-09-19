@@ -1,0 +1,17 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    @System.Web.Optimization.Styles.Render("~/contenido/css")
+
+</head>
+<body data-spy="scroll" data-target="#topnav">
+    @Html.Partial("_PartialNav")
+
+    @RenderBody()
+
+    @System.Web.Optimization.Scripts.Render("~/contenido/js")
+</body>
+</html>

@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "TrazarPunto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container containerSpace">
+    <div class="row">
+        <div class="col-md-7 col-md-offset-2 col-xs-12">
+            <h2>Trazar una ruta de un punto <strong>A</strong> hacia un punto <strong>B</strong></h2>
+            <br />
+            <div class="form-inline">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Punto A: </label>
+                    <input type="text" class="form-control" id="txtStart" placeholder="Ej: San Salvador">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Punto B: </label>
+                    <input type="text" class="form-control" id="txtFinish" placeholder="Ej: La Libertad">
+                </div>
+                <button class="btn btn-success" onclick="ObtenerRuta()" value="Get Route">Trazar</button>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-7 col-md-offset-2 col-xs-12">
+            <div id="mapaRuta">
+
+            </div>
+
+        </div>
+    </div>
+    <br />
+
+</div>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&libraries=places"></script>
+<script>
+
+    var source, destination;
+    var directionsDisplay;
+    var directionsService = new google.maps.DirectionsService();
+    google.maps.event.addDomListener(window, 'load', function () {
+        new google.maps.places.SearchBox(document.getElementById('txtStart'));
+        new google.maps.places.SearchBox(document.getElementById('txtFinish'));
+        directionsDisplay = new google.maps.DirectionsRenderer({ 'draggable': true });
+    });
+    function ObtenerRuta() {
+        var salvador = new google.maps.LatLng(13.89, -88.70);
+        var mapOptions = {
+            zoom: 8,
+            center: salvador
+        };
+
+        map = new google.maps.Map(document.getElementById('mapaRuta'), mapOptions);
+        directionsDisplay.setMap(map);
+
+        //*********Direccion y Ruta**********************//
+        source = document.getElementById("txtStart").value;
+        destination = document.getElementById("txtFinish").value;
+
+        var request = {
+            origin: source,
+            destination: destination,
+            travelMode: google.maps.TravelMode.DRIVING
+        };
+        directionsService.route(request, function (response, status) {
+            if (status == google.maps.DirectionsStatus.OK) {
+                directionsDisplay.setDirections(response);
+            }
+        });
+    }
+</script>
